@@ -1,0 +1,16 @@
+string $materials[] = `ls -mat`;
+for($mat in $materials)
+{
+    $attr = $mat + ".incandescence";
+    string $conns[] = `listConnections -s true -p false $attr`;
+    for($conn in $conns)
+    {
+        if(nodeType($conn) == "file")
+        {
+            //baking file, connect to color
+            $srcAttr = $conn + ".outColor";
+            $dstAttr = $mat + ".color";
+            connectAttr -force $srcAttr $dstAttr;
+        }
+    }
+};

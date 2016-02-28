@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CityAdvStory xmlns="http://www.codeidiot.org/CityAdvStory/">
+  <Tasks>
+    <Task Title="系列任务1" Id="task1">
+      <Start EventPoint="task1">
+        <PositiveDialog>找到第二个NPC</PositiveDialog>
+      </Start>
+      <End EventPoint="task2">
+        <Conditions>
+          <InputCondition Answer="a">
+            <Message>猜</Message>
+          </InputCondition>
+        </Conditions>
+        <PositiveDialog>啊，你竟然找到我了……</PositiveDialog>
+      </End>
+    </Task>
+    <Task Title="系列任务2" Id="task2">
+      <Start EventPoint="task2">
+        <Conditions>
+          <TaskCondition Type="Completed" TaskId="task1"/>
+        </Conditions>
+        <PositiveDialog>请继续找到第三个NPC</PositiveDialog>
+        <NegativeDialog>请先找第一个NPC做任务1</NegativeDialog>
+      </Start>
+      <End EventPoint="task3">
+        <PositiveDialog>啊，你竟然找到我了……</PositiveDialog>
+      </End>
+    </Task>
+    <Task Title="系列任务3" Id="task3">
+      <Start EventPoint="task3">
+        <Conditions>
+          <TaskCondition Type="Completed" TaskId="task2"/>
+        </Conditions>
+        <PositiveDialog>请到达秘密地点，然后回来找我</PositiveDialog>
+        <NegativeDialog>请先找第二个NPC做任务2</NegativeDialog>
+      </Start>
+      <End EventPoint="task3">
+        <Conditions>
+          <EventPointCondition Name="secret"/>
+          <InputCondition Answer="abc">
+            <Message>请输入正确答案</Message>
+          </InputCondition>
+        </Conditions>
+        <PositiveDialog>恭喜你完成了所有任务！</PositiveDialog>
+        <NegativeDialog>你找到秘密地点了吗？</NegativeDialog>
+      </End>
+    </Task>
+  </Tasks>
+  <NPCs>
+    <NPC Name="Wander" EventPoint="task1">
+      <Dialog Type="Trigger">
+        <Conditions>
+          <TaskCondition TaskId="task1" Type="Completed"/>
+          <TaskCondition TaskId="task2" Type="Completed"/>
+          <TaskCondition TaskId="task3" Type="Completed"/>
+        </Conditions>
+        <Content>Hi~你已经做完了所有的任务。恭喜，我们的地图就这么大……</Content>
+      </Dialog>
+      <Dialog Type="Trigger">
+        <Content>你好，欢迎来到火星！</Content>
+      </Dialog>
+    </NPC>
+    <NPC Name="Wander2" EventPoint="task2">
+      <Dialog>
+        <Content>只是一点无聊的对话……</Content>
+      </Dialog>
+    </NPC>
+    <NPC Name="Wander3" EventPoint="task3">
+      <Dialog>
+        <Content>其实我是最后一个人了……</Content>
+      </Dialog>
+    </NPC>
+  </NPCs>
+</CityAdvStory>

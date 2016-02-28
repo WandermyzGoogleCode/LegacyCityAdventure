@@ -1,0 +1,61 @@
+fileFormatVersion: 1
+guid: 297ca7fa92d9f68458e776886826c3ed
+ModelImporter:
+  importerVersion: 7
+  meshes:
+    scaleFactor: 0.01
+    useFileUnits: 1
+    meshCompression: 0
+    generateColliders: 0
+    swapUVs: 0
+    generateSecondaryUV: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalImportMode: 0
+    tangentImportMode: 1
+    smoothingAngle: 60
+    splitTangents: 1
+  materials:
+    generation: 1
+  animations:
+    generation: 3
+    bakeAnimations: 0
+    animationCompression: 1
+    animationWrapMode: 0
+    splitAnimations: 1
+AssetImporter:
+  importerVersion: 1
+  fileIDToRecycleName:
+    4300000: xiazhi01
+    4300002: xiaotui01
+    4300004: shangzhi01
+    4300006: OO01
+    4300008: XX01
+    4300010: qun01
+    4300012: xiezi01
+    4300014: tou01
+    4300016: ya01
+    4300018: ooxx02
+    4300020: ooxx03
+    4300022: meimao01
+    4300024: _______________________________________-50c63c0.obj01
+    4300026: _______________________________________-50c1940.obj01
+    4300028: _______________________________________-50bca30.obj01
+    4300030: _______________________________________-11ff4a8.obj01
+    4300032: _______________________________________-120a208.obj01
+    4300034: 07
+    4300036: 08
+    4300038: 09
+    4300040: 10
+    4300042: 11
+    4300044: 12
+    4300046: yanbai03
+    4300048: yanbai05
+    4300050: faqia03
+    4300052: faqia04
+    4300054: jiemao01
+    4300056: tongkou03
+    4300058: tongkou04

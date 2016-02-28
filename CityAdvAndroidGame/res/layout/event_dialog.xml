@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="fill_parent" android:orientation="vertical"
+	android:paddingTop="5dip" android:paddingBottom="13dip"
+	android:paddingLeft="5dip" android:paddingRight="5dip"
+	android:layout_width="fill_parent">
+
+	<!--
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_marginTop="10dip" android:layout_height="fill_parent"
+		android:layout_weight="1">
+		
+		<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
+			<TextView android:text="content"  android:minHeight="50dip" android:id="@+id/eventDialogContent" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="18sp" android:layout_weight="1"></TextView>
+			<ListView android:id="@+id/eventDialogList" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1" android:isScrollContainer="false"></ListView>
+		</LinearLayout>
+
+	</ScrollView>  -->
+	<ListView android:id="@+id/eventDialogList" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"></ListView>
+		
+	<RelativeLayout android:layout_height="wrap_content"
+		android:layout_width="fill_parent" android:layout_marginTop="15dip">
+		
+		<LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:layout_centerInParent="true">
+			<Button android:id="@+id/eventDialogOkButton"
+				android:text="@android:string/ok"
+				android:layout_height="wrap_content" android:layout_width="100dip">
+			</Button>
+			<Button android:id="@+id/eventDialogCancelButton"
+				android:layout_marginLeft = "20dip"
+				android:layout_height="wrap_content" android:layout_width="100dip" android:text="@string/event_dialog_reject">
+			</Button>
+		</LinearLayout>
+	</RelativeLayout>
+</LinearLayout>
+

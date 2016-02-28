@@ -1,0 +1,6 @@
+http://codeidiotca.appspot.com/downloadlist 下载记录列表 每条记录格式如下：ID name description
+
+http://codeidiotca.appspot.com/upload?name=xx&description=xxx 上传一条记录 记录的name为xx,description为xxx,之后通过POST方法上传content
+
+http://codeidiotca.appspot.com/downloadcontent?id=xxxx 下载一条id为xxxx的记录的content
+

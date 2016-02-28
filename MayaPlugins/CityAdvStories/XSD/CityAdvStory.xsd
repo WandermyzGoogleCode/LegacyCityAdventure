@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CityAdvStory"
+    targetNamespace="http://www.codeidiot.org/CityAdvStory/"
+    elementFormDefault="qualified"
+    xmlns="http://www.codeidiot.org/CityAdvStory/"
+    xmlns:mstns="http://www.codeidiot.org/CityAdvStory/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+  <xs:simpleType name="TaskConditionType" id="TaskConditionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NotTaken">
+        <xs:annotation>
+          <xs:documentation>还没有接到指定的任务</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Doing">
+        <xs:annotation>
+          <xs:documentation>指定的任务正在进行</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Completed">
+        <xs:annotation>
+          <xs:documentation>指定的任务已经完成</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>  
+  
+  <xs:complexType id="Conditions" name="Conditions">
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+      <xs:choice minOccurs="1" maxOccurs="1">
+        <xs:element name="TaskCondition">
+          <xs:annotation>
+            <xs:documentation>
+              一个基于任务完成情况的条件判断。
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="TaskId" type="xs:string" use="required">
+              <xs:annotation>
+                <xs:documentation>任务的全局唯一ID号</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Type" type="mstns:TaskConditionType" use="required">
+              <xs:annotation>
+                <xs:documentation>条件类型</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="EventPointCondition">
+          <xs:annotation>
+            <xs:documentation>
+              判断是否曾经到达过某一个事件点
+            </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="Name" type="mstns:EventPointName" use="required">
+              <xs:annotation>
+                <xs:documentation>事件点的名称，与地图中设置的名称一致。必须是数字、字母或下划线，长度不超过64字节。</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="InputCondition">
+          <xs:annotation>
+            <xs:documentation>（尚未实现）让玩家输入一个字符串并与正确答案对照</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+              <xs:element name="Message" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>向用户显示的提示信息</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Answer" type="xs:string" use="required">
+              <xs:annotation>
+                <xs:documentation>正确答案。支持正则表达式。</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SelectionCondition">
+          <xs:annotation>
+            <xs:documentation>（尚未实现）让玩家从选项中选择一个正确答案</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="Option" type="xs:string">
+                <xs:annotation>
+                  <xs:documentation>设置一个选项</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Answer" type="xs:int" use="required">
+              <xs:annotation>
+                <xs:documentation>正确答案的序号，从0开始编号。</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="EventPointName" id="EventPointName">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="64"/>
+      <xs:pattern value="[A-Za-z0-9_]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DialogType" id="DialogType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Trigger">
+        <xs:annotation>
+          <xs:documentation>“触发式”对话，即玩家通过二维码或RFID来触发与此NPC的对话</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Near">
+        <xs:annotation>
+          <xs:documentation>（尚未实现）“路过式”对话，即玩家距离该NPC一定距离并且面向此NPC时发生对话</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType id="TaskTriggerPoint" name="TaskTriggerPoint">
+    <xs:sequence minOccurs="1" maxOccurs="1">
+      <xs:element name="Conditions" type="mstns:Conditions" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>指定任务开始或结束的前置条件，如果不设置，则任务可以无条件开始或结束。当然，任务结束的默认条件是已经接到了这个任务。</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="PositiveDialog" type="xs:string" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>前置条件满足时的发生的对话</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="NegativeDialog" type="xs:string" minOccurs="0" maxOccurs="1">
+        <xs:annotation>
+          <xs:documentation>前置条件不满足时的发生的对话，如果没有设置前置条件，则这一项也可以不设置</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="EventPoint" type="EventPointName" use="required">
+      <xs:annotation>
+        <xs:documentation>指定触发任务开始或结束的事件点。事件点的名称与地图中设置的名称一致。必须是数字、字母或下划线，长度不超过64字节。</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:element name="CityAdvStory">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="1">
+        <xs:element name="Tasks" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>指定游戏中的所有任务</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="Task">
+                <xs:annotation>
+                  <xs:documentation>指定一个任务</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Start" type="mstns:TaskTriggerPoint">
+                      <xs:annotation>
+                        <xs:documentation>指定与任务开始有关的信息</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="End" type="mstns:TaskTriggerPoint">
+                      <xs:annotation>
+                        <xs:documentation>指定与任务结束有关的信息</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Title" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>任务标题，将显示在游戏界面中</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="Id" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>任务的ID号，用一个字符串表示。可以与任务标题相同，但是必须保证此ID号在所有任务中是唯一的</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>          
+        </xs:element>
+        <xs:element name="NPCs" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>指定游戏中出现的所有NPC</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+              <xs:element name="NPC" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>指定一个NPC的行为</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="Dialog" minOccurs="1" maxOccurs="1">
+                      <xs:annotation>
+                        <xs:documentation>指定该NPC的一条对话</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="1">
+                          <xs:element name="Conditions" minOccurs="0" maxOccurs="1" type="mstns:Conditions">
+                            <xs:annotation>
+                              <xs:documentation>指定对话发生的条件。如果同时为NPC定义了多种对话，则从前向后匹配到第一条满足条件的对话。不指定此项则表示该对话无条件发生。</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="Content" type="xs:string" minOccurs="1" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>对话内容</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="Type" type="mstns:DialogType" use="optional" default="Trigger">
+                          <xs:annotation>
+                            <xs:documentation>对话类型，若不指定则默认为“触发式”对话</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="Name" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>NPC的名字，会出现在游戏界面中</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="EventPoint" type="mstns:EventPointName" use="required">
+                    <xs:annotation>
+                      <xs:documentation>指定NPC对应的事件点</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

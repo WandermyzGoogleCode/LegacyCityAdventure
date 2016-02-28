@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CityAdvStory xmlns="http://www.codeidiot.org/CityAdvStory/">
+  <Tasks>
+    <Task Title="寻找口令走出密室" Id="task1">
+      <Start EventPoint="npc6">
+        <PositiveDialog>寻找通关口令，一共3个字母，请注意对话细节</PositiveDialog>
+      </Start>
+      <End EventPoint="npc6">
+        <Conditions>
+          <InputCondition Answer="cib">
+            <Message>请输入通关密码</Message>
+          </InputCondition>
+        </Conditions>
+        <PositiveDialog>恭喜你过关了~请找老师领取奖励</PositiveDialog>
+        <NegativeDialog>很抱歉，密码错误，请仔细思考</NegativeDialog>
+      </End>
+    </Task>
+  </Tasks>
+
+  <NPCs>
+    <NPC Name="Wander" EventPoint="npc1">
+      <Dialog Type="Trigger">
+        <Conditions>
+          <EventPointCondition Name="npc2"/>
+          <EventPointCondition Name="npc3"/>
+        </Conditions>
+        <Content>我没有问题了</Content>
+      </Dialog>
+      <Dialog Type="Trigger">
+        <Conditions>
+          <EventPointCondition Name="npc2"/>
+        </Conditions>
+        <Content>老师，请问这门动画课主要使用神马语言？</Content>
+      </Dialog>
+      <Dialog Type="Trigger">
+        <Content>。。。上课时间未经老师允许不能说话啊</Content>
+      </Dialog>
+    </NPC>
+
+    <NPC Name="teacher" EventPoint="npc2">
+      <Dialog Type="Trigger">
+        <Conditions>
+          <TaskCondition Type="Completed" TaskId="task1"/>
+        </Conditions>
+        <Content>这个故事真难编啊……你觉得难度如何？奖励？Bazinga~</Content>
+      </Dialog>
+      <Dialog Type="Trigger">
+        <Conditions>
+          <EventPointCondition Name="npc1"/>
+          <EventPointCondition Name="npc3"/>
+        </Conditions>
+        <Content>请好好听课！</Content>
+      </Dialog>
+      <Dialog Type="Trigger">
+        <Conditions>
+          <EventPointCondition Name="npc1"/>
+        </Conditions>
+        <Content>这个问题我们第一节课就说过了吧，难道还有同学不记得？另外，这位同学，请去将第‘2’扇‘window’打开，然后去‘自己’的座位上。</Content>
+      </Dialog>
+      <Dialog Type="Trigger">
+        <Content>那边那位举手的同学，你有什么问题？</Content>
+      </Dialog>
+    </NPC>
+
+    <NPC Name="window" EventPoint="npc3">
+      <Dialog Type="Trigger">
+        <Conditions>
+          <EventPointCondition Name="npc2"/>
+        </Conditions>
+        <Content>这里有一行涂鸦：the Big Bang theory rocks!</Content>
+      </Dialog>
+    </NPC>
+
+    <NPC Name="zz" EventPoint="npc4">
+      <Dialog Type="Trigger">
+        <Content>哦，不不不，你不能坐在这儿。顺便提醒你一下，你需要的信息老师和窗帘都告诉你了，如果还猜不出来……唔，“不”字对你有帮助么？</Content>
+      </Dialog>
+    </NPC>
+
+    <NPC Name="seat" EventPoint="npc5">
+      <Dialog Type="Trigger">
+        <Conditions>
+          <EventPointCondition Name="npc2"/>
+        </Conditions>
+        <Content>这就是你的座位，还记得Sheldon的口头禅么？里面有两个你需要的字母。如果你已经得到答案了，在门口输入密码即可。</Content>
+      </Dialog>
+    </NPC>
+
+    <NPC Name="door" EventPoint="npc6">
+      <Dialog Type="Trigger">
+        <Content>我是一扇门……</Content>
+      </Dialog>
+    </NPC>
+  </NPCs>
+</CityAdvStory>
